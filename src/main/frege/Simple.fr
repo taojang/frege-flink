@@ -1,0 +1,14 @@
+module Simple where
+
+import frege.java.flink.Env as Env (FlinkStreamExecEnv.readTextFile, FlinkStreamExecEnv.execute)
+import frege.java.flink.DataStream as DS (DataStream)
+import frege.java.flink.Functions
+
+main _ = do
+    let !f = lambdaToMapFn (++ "!")
+    env <- Env.getExecutionEnvironment ()
+    ds  <- readTextFile env "file:///tmp/numbers.csv"
+    ds' <- return $ DataStream.dsmap ds appendExcl
+    -- ds' <- return $ DataStream.dsmap ds f
+    _   <- DataStream.dsprint ds'
+    void $ execute env "testing"

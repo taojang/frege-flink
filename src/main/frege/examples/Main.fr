@@ -1,0 +1,8 @@
+module examples.Main where
+
+data MyName = MN { runMN :: String }
+
+main :: IO ()
+main = println $ hi ++ name
+  where hi    = "hello "
+        name  = (MyName.runMN • MN) "frege!"

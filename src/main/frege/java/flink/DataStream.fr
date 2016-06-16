@@ -1,0 +1,17 @@
+module frege.java.flink.DataStream where
+
+import frege.java.flink.Functions
+
+data DataStream a = pure native org.apache.flink.streaming.api.datastream.DataStream where
+    pure native dsmap map :: DataStream a -> MapFn a b -> DataStream b
+    native dsprint print :: DataStream a -> STMutable s (DataStreamSink a)
+
+data DataStreamSource a = pure native org.apache.flink.streaming.api.datastream.DataStreamSource
+
+data DataStreamSink a = native org.apache.flink.streaming.api.datastream.DataStreamSink
+
+{-
+--- Functor instance for DataStream
+instance Functor DataStream where
+    fmap f ds = ds.dsmap $ lambdaToMapFn f
+-}

@@ -1,0 +1,5 @@
+module frege.java.flink.Test1 where
+
+import Test.QuickCheck
+
+method1 = property(1 == 1)
