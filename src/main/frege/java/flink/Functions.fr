@@ -1,8 +1,11 @@
 module frege.java.flink.Functions where
 
-data MapFn a b = pure native org.apache.flink.api.common.functions.MapFunction
+
+data FMapFn a b = pure native org.apache.flink.api.common.functions.MapFunction
 -- where
 --    native _map map :: MapFn a b -> a -> IO b throws Exception
-    
-pure native lambdaToMapFn frege_flink.functions.FnHelpers.lambdaToMapFn {a, b} :: (a -> b) -> MapFn a b
-pure native appendExcl frege_flink.functions.FnHelpers.appendExcl :: MapFn String String
+
+data MapFn a b = pure native frege_flink.functions.MapFn where
+    pure native new :: (a -> b) -> MapFn a b
+
+--pure native appendExcl frege_flink.functions.FnHelpers.appendExcl :: FMapFn String String

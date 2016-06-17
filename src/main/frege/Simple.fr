@@ -4,11 +4,12 @@ import frege.java.flink.Env as Env (FlinkStreamExecEnv.readTextFile, FlinkStream
 import frege.java.flink.DataStream as DS (DataStream)
 import frege.java.flink.Functions
 
+appendExcl :: MapFn String String
+appendExcl = MapFn.new (++ "!")
+
 main _ = do
-    let !f = lambdaToMapFn (++ "!")
     env <- Env.getExecutionEnvironment ()
     ds  <- readTextFile env "file:///tmp/numbers.csv"
     ds' <- return $ DataStream.dsmap ds appendExcl
-    -- ds' <- return $ DataStream.dsmap ds f
     _   <- DataStream.dsprint ds'
     void $ execute env "testing"
